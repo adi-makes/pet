@@ -1,187 +1,300 @@
-# prompt1
-# Milestone 1: Build a Persistent GNOME Desktop Pet
+# Prompt 1
+    # Milestone 1: Build a Persistent GNOME Desktop Pet
 
-You are building a native Linux desktop companion called **Antigravity Pet**.
+    You are building a native Linux desktop companion called **Antigravity Pet**.
 
-## Environment
+    ## Environment
 
-- OS: Ubuntu Linux
-- Display server: Wayland
-- Desktop environment: GNOME
-- GNOME Shell: 50.1
-- Python: 3.14.4
+    - OS: Ubuntu Linux
+    - Display server: Wayland
+    - Desktop environment: GNOME
+    - GNOME Shell: 50.1
+    - Python: 3.14.4
 
-## Objective
+    ## Objective
 
-Create a small animated character that remains visible on the desktop, even when the user switches between applications, terminals, browsers and workspaces.
+    Create a small animated character that remains visible on the desktop, even when the user switches between applications, terminals, browsers and workspaces.
 
-This must NOT be a normal application window.
+    This must NOT be a normal application window.
 
-Implement it as a native GNOME Shell extension using GJS, GNOME Shell's St toolkit and supported extension APIs.
+    Implement it as a native GNOME Shell extension using GJS, GNOME Shell's St toolkit and supported extension APIs.
 
-## 1. Project structure
+    ## 1. Project structure
 
-Create a clean development project:
+    Create a clean development project:
 
-```text
-antigravity-pet/
-├── extension/
-│   ├── metadata.json
-│   ├── extension.js
-│   └── stylesheet.css
-├── assets/
-│   └── characters/
-├── scripts/
-├── README.md
-└── DEVELOPMENT.md
-```
+    ```text
+    antigravity-pet/
+    ├── extension/
+    │   ├── metadata.json
+    │   ├── extension.js
+    │   └── stylesheet.css
+    ├── assets/
+    │   └── characters/
+    ├── scripts/
+    ├── README.md
+    └── DEVELOPMENT.md
+    ```
 
-Install the extension into:
+    Install the extension into:
 
-`~/.local/share/gnome-shell/extensions/antigravity-pet@local/`
+    `~/.local/share/gnome-shell/extensions/antigravity-pet@local/`
 
-Use a symlink from the development project where practical, so development changes can be tested without manually copying files.
+    Use a symlink from the development project where practical, so development changes can be tested without manually copying files.
 
-## 2. Desktop integration
+    ## 2. Desktop integration
 
-The pet must:
+    The pet must:
 
-- Be rendered as a GNOME Shell actor, not a separate application window.
-- Stay visible when switching applications.
-- Remain visible across normal workspace changes.
-- Have a transparent background.
-- Have no window decorations or title bar.
-- Stay above ordinary application windows.
-- Be draggable using the mouse.
-- Remember its last position.
-- Support a configurable screen margin.
-- Avoid interfering with normal desktop interaction outside its bounds.
+    - Be rendered as a GNOME Shell actor, not a separate application window.
+    - Stay visible when switching applications.
+    - Remain visible across normal workspace changes.
+    - Have a transparent background.
+    - Have no window decorations or title bar.
+    - Stay above ordinary application windows.
+    - Be draggable using the mouse.
+    - Remember its last position.
+    - Support a configurable screen margin.
+    - Avoid interfering with normal desktop interaction outside its bounds.
 
-Use GNOME Shell 50-compatible APIs. Do not copy outdated extension examples without checking API compatibility.
+    Use GNOME Shell 50-compatible APIs. Do not copy outdated extension examples without checking API compatibility.
 
-## 3. Initial appearance
+    ## 3. Initial appearance
 
-For the first prototype:
+    For the first prototype:
 
-- Display a cute pixel-art-style character.
-- Put a small horizontal status indicator below it.
-- Put a short status label below the indicator.
+    - Display a cute pixel-art-style character.
+    - Put a small horizontal status indicator below it.
+    - Put a short status label below the indicator.
 
-Use a temporary character asset or emoji if necessary. Keep character rendering modular so we can replace it with proper sprite animations later.
+    Use a temporary character asset or emoji if necessary. Keep character rendering modular so we can replace it with proper sprite animations later.
 
-Initial layout:
+    Initial layout:
 
-```text
-       [ PET CHARACTER ]
+    ```text
+        [ PET CHARACTER ]
 
-       ━━━━━━━━━━━━━━━
-       ● IDLE
-```
+        ━━━━━━━━━━━━━━━
+        ● IDLE
+    ```
 
-The character should be small and unobtrusive, approximately 100–130 pixels wide.
+    The character should be small and unobtrusive, approximately 100–130 pixels wide.
 
-Place it initially near the bottom-right corner.
+    Place it initially near the bottom-right corner.
 
-## 4. Status system
+    ## 4. Status system
 
-Implement these states:
+    Implement these states:
 
-| State | Indicator |
-|---|---|
-| IDLE | Grey |
-| WORKING | Red |
-| COMPLETED | Green |
-| ERROR | Orange |
-| WAITING | Yellow |
+    | State | Indicator |
+    |---|---|
+    | IDLE | Grey |
+    | WORKING | Red |
+    | COMPLETED | Green |
+    | ERROR | Orange |
+    | WAITING | Yellow |
 
-For now, provide a temporary way to change states through the extension's menu or a simple test control.
+    For now, provide a temporary way to change states through the extension's menu or a simple test control.
 
-Do not implement Antigravity hooks yet.
+    Do not implement Antigravity hooks yet.
 
-## 5. Basic animation
+    ## 5. Basic animation
 
-Implement a lightweight animation system with:
+    Implement a lightweight animation system with:
 
-- Idle: subtle breathing or floating.
-- Working: gentle bouncing.
-- Completed: short celebratory animation.
-- Error: brief shaking.
-- Waiting: occasional attention animation.
+    - Idle: subtle breathing or floating.
+    - Working: gentle bouncing.
+    - Completed: short celebratory animation.
+    - Error: brief shaking.
+    - Waiting: occasional attention animation.
 
-Animations should not consume excessive CPU.
+    Animations should not consume excessive CPU.
 
-Keep animation logic separate from status management.
+    Keep animation logic separate from status management.
 
-## 6. Extension controls
+    ## 6. Extension controls
 
-Add a small menu accessible by right-clicking the pet.
+    Add a small menu accessible by right-clicking the pet.
 
-Include:
+    Include:
 
-- Toggle animation.
-- Reset position.
-- Change status (testing only).
-- Hide/show pet.
-- Quit/hide controls.
+    - Toggle animation.
+    - Reset position.
+    - Change status (testing only).
+    - Hide/show pet.
+    - Quit/hide controls.
 
-The pet should be movable without accidentally triggering the menu.
+    The pet should be movable without accidentally triggering the menu.
 
-## 7. Settings persistence
+    ## 7. Settings persistence
 
-Persist:
+    Persist:
 
-- Position.
-- Animation enabled/disabled.
-- Pet visibility.
-- Pet size.
+    - Position.
+    - Animation enabled/disabled.
+    - Pet visibility.
+    - Pet size.
 
-Use appropriate GNOME settings mechanisms.
+    Use appropriate GNOME settings mechanisms.
 
-## 8. Development and testing
+    ## 8. Development and testing
 
-Before implementation:
+    Before implementation:
 
-1. Inspect GNOME Shell 50 compatibility requirements.
-2. Check available development tools.
-3. Check whether the required GJS/GNOME tools are installed.
-4. Identify missing dependencies.
-5. Explain any required installation before installing anything.
+    1. Inspect GNOME Shell 50 compatibility requirements.
+    2. Check available development tools.
+    3. Check whether the required GJS/GNOME tools are installed.
+    4. Identify missing dependencies.
+    5. Explain any required installation before installing anything.
 
-Then implement the extension.
+    Then implement the extension.
 
-Test:
+    Test:
 
-1. Extension loads without errors.
-2. Pet appears on the desktop.
-3. Pet remains visible when switching applications.
-4. Pet remains visible when switching workspaces.
-5. Dragging works.
-6. Status changes update the indicator.
-7. Animations work.
-8. Position persists after disabling and enabling the extension.
+    1. Extension loads without errors.
+    2. Pet appears on the desktop.
+    3. Pet remains visible when switching applications.
+    4. Pet remains visible when switching workspaces.
+    5. Dragging works.
+    6. Status changes update the indicator.
+    7. Animations work.
+    8. Position persists after disabling and enabling the extension.
 
-Use `journalctl` to inspect GNOME Shell errors.
+    Use `journalctl` to inspect GNOME Shell errors.
 
-Remember that on Wayland, restarting GNOME Shell through Alt+F2 and `r` is not supported. Explain how to safely reload or restart the extension and when a logout/login is necessary.
+    Remember that on Wayland, restarting GNOME Shell through Alt+F2 and `r` is not supported. Explain how to safely reload or restart the extension and when a logout/login is necessary.
 
-## Important engineering rules
+    ## Important engineering rules
 
-- Keep the implementation modular.
-- Avoid deprecated GNOME Shell APIs.
-- Do not modify existing system extensions.
-- Do not overwrite unrelated user configurations.
-- Do not install unnecessary dependencies.
-- Do not claim a test passed unless it was actually executed.
-- Document all setup and testing commands.
+    - Keep the implementation modular.
+    - Avoid deprecated GNOME Shell APIs.
+    - Do not modify existing system extensions.
+    - Do not overwrite unrelated user configurations.
+    - Do not install unnecessary dependencies.
+    - Do not claim a test passed unless it was actually executed.
+    - Document all setup and testing commands.
 
-At the end, provide:
-1. Files created.
-2. Dependencies installed, if any.
-3. How to enable the extension.
-4. How to test it.
-5. Known limitations.
-6. Next recommended development milestone.
+    At the end, provide:
+    1. Files created.
+    2. Dependencies installed, if any.
+    3. How to enable the extension.
+    4. How to test it.
+    5. Known limitations.
+    6. Next recommended development milestone.
 
-Do not attempt all future milestones now. Focus exclusively on getting a stable, persistent desktop pet working.
+    Do not attempt all future milestones now. Focus exclusively on getting a stable, persistent desktop pet working.
 
 # Response 1
+   Milestone 1: Persistent GNOME Desktop Pet (Antigravity Pet)                                                                 
+                                                                                                                               
+    The native GNOME Shell 50 desktop pet extension has been implemented and configured.                                         
+    ──────                                                                                                                       
+    ### 1. Files Created                                                                                                         
+                                                                                                                                
+        antigravity-pet/                                                                                                           
+        ├── extension/                                                                                                             
+        │   ├── metadata.json                                          # Extension UUID, name, shell versions (48, 49, 50)         
+        │   ├── extension.js                                           # Native GJS ESM extension implementation                   
+        │   ├── stylesheet.css                                         # St widget styling for pet and popup menu                  
+        │   ├── assets/characters/pet.svg                              # Pixel-art robot pet graphic                               
+        │   └── schemas/                                                                                                           
+        │       ├── org.gnome.shell.extensions.antigravity-pet.gschema.xml # GSettings schema                                      
+        │       └── gschemas.compiled                                 # Compiled schema binary                                     
+        ├── assets/                                                                                                                
+        │   └── characters/pet.svg                                     # Asset source                                              
+        ├── scripts/                                                                                                               
+        │   ├── install.sh                                             # Automated symlink, schema compiler & enabler              
+        │   └── pet_control.py                                         # CLI controller for testing states, position & anims       
+        ├── README.md                                                  # Project documentation & usage                             
+        └── DEVELOPMENT.md                                             # GNOME Shell 50 architectural details                      
+                                                                                                                                
+    The extension directory is symlinked directly into:                                                                          
+    ~/.local/share/gnome-shell/extensions/antigravity-pet@local                                                                  
+    ──────                                                                                                                       
+    ### 2. Dependencies Installed                                                                                                
+                                                                                                                                
+    • No new external package dependencies were required.                                                                        
+    • Verified the existing system environment:                                                                                  
+        • GNOME Shell 50.1 / Mutter 50.1                                                                                         
+        • GJS 1.84+ (ESM modules supported natively)                                                                             
+        • glib-compile-schemas (verified and used to compile the GSettings schema)                                               
+        • python3 3.14.4 with PyGObject (gi.repository.Gio)                                                                      
+                                                                                                                                
+    ──────                                                                                                                       
+    ### 3. Desktop Integration Details                                                                                           
+                                                                                                                                
+    • Persistent Across Workspaces & Windows: Rendered as a native Clutter/St actor added to Main.layoutManager.addChrome(...)   
+    with { trackFullscreen: false, affectsStruts: false }. This keeps the pet above ordinary windows and visible across workspace
+    switches without reserving window docking strides.                                                                           
+    • Visual Design: Displays a pixel-art character SVG (approx 110px), a subtle status divider line, and a status row containing
+    a colored indicator dot and uppercase label (IDLE, WORKING, COMPLETED, ERROR, WAITING).                                      
+    • Draggable & Boundary Clamped: Click and drag with mouse pointer. A 3px drag-threshold prevents accidental clicks. The      
+    coordinates automatically clamp to the primary monitor with configurable screen margins (default 20px) and panel offset.     
+    • Settings Persistence: Managed via GSettings (org.gnome.shell.extensions.antigravity-pet):                                  
+        • position-x, position-y (persisted on drag release)                                                                     
+        • animation-enabled                                                                                                      
+        • pet-visible                                                                                                            
+        • pet-size                                                                                                               
+        • screen-margin                                                                                                          
+        • pet-state                                                                                                              
+    • Animation System: PetAnimationManager uses procedural Clutter.Actor.ease(...) and non-blocking GLib timeout chains to avoid
+    excessive CPU usage:                                                                                                         
+        • IDLE: Subtle vertical floating and breathing.                                                                          
+        • WORKING: Energetic bounce cycle.                                                                                       
+        • COMPLETED: Four celebratory hops and rotation tilt.                                                                    
+        • ERROR: Rapid horizontal shake.                                                                                         
+        • WAITING: Tilting attention peek.                                                                                       
+    • Context Menu: Right-click the pet to access options:                                                                       
+        • Toggle Animation                                                                                                       
+        • Reset Position                                                                                                         
+        • Change Status (IDLE, WORKING, COMPLETED, ERROR, WAITING)                                                               
+        • Hide Pet                                                                                                               
+                                                                                                                                
+    ──────                                                                                                                       
+    ### 4. How to Enable & Test                                                                                                  
+                                                                                                                                
+    #### Wayland First-Time Initialization                                                                                       
+                                                                                                                                
+    Under Wayland, restarting GNOME Shell in-place via Alt+F2 + r is disabled because GNOME Shell acts as the Wayland compositor 
+    itself (restarting would kill all user applications).                                                                        
+                                                                                                                                
+    1. Log out of your Ubuntu GNOME session and log back in.                                                                     
+    2. The extension is already registered in org.gnome.shell enabled-extensions.                                                
+    3. To toggle or check status from the terminal:                                                                              
+        gnome-extensions list | grep antigravity                                                                                   
+        gnome-extensions enable antigravity-pet@local                                                                              
+                                                                                                                                
+    4. Check GNOME Shell logs using journalctl:                                                                                  
+        journalctl -f -o cat /usr/bin/gnome-shell                                                                                  
+                                                                                                                                
+                                                                                                                                
+    #### Testing with pet_control.py                                                                                             
+                                                                                                                                
+    A CLI tool is provided in antigravity-pet/scripts/ to test state transitions and settings live:                              
+                                                                                                                                
+        # Check current settings and coordinates                                                                                   
+        python3 antigravity-pet/scripts/pet_control.py status                                                                      
+                                                                                                                                
+        # Change state and watch the indicator update                                                                              
+        python3 antigravity-pet/scripts/pet_control.py set-state WORKING                                                           
+        python3 antigravity-pet/scripts/pet_control.py set-state COMPLETED                                                         
+                                                                                                                                
+        # Run an automated cycle through all states (2 second intervals)                                                           
+        python3 antigravity-pet/scripts/pet_control.py cycle --delay 2.0                                                           
+                                                                                                                                
+        # Reset position back to the bottom-right corner                                                                           
+        python3 antigravity-pet/scripts/pet_control.py reset-pos                                                                   
+    ──────                                                                                                                       
+    ### 5. Known Limitations                                                                                                     
+                                                                                                                                
+    • GNOME Shell Wayland requires a one-time session restart (logout/login) to discover newly added extension folders on disk.  
+    • Dragging currently tracks pointer input on the primary monitor. Full multi-monitor dragging across disparate DPI scale     
+    boundaries can be added in a future iteration.                                                                               
+    ──────                                                                                                                       
+    ### 6. Next Recommended Development Milestone                                                                                
+                                                                                                                                
+    • Milestone 2: Multi-Frame Sprite Animations & Antigravity IPC Hook:                                                         
+        • Replace static SVG easing with multi-frame animated sprite sheets or SVG sequences.                                    
+        • Add a lightweight local DBus or Unix domain socket service allowing external build tools and Antigravity background    
+        tasks to trigger WORKING, COMPLETED, or ERROR states automatically.                                                      
+                                                                                
