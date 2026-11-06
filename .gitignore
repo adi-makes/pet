@@ -1,0 +1,18 @@
+# Compiled schema binaries
+*.compiled
+gschemas.compiled
+
+# Zip packages / extension bundles
+*.shell-extension.zip
+*.zip
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary / editor files
+*~
+.DS_Store
+.vscode/
+.idea/

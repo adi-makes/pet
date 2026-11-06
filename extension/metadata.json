@@ -1,0 +1,12 @@
+{
+  "uuid": "antigravity-pet@local",
+  "name": "Antigravity Pet",
+  "description": "A persistent GNOME desktop companion pet that stays visible above windows and across workspaces.",
+  "shell-version": [
+    "48",
+    "49",
+    "50"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.antigravity-pet",
+  "version": 1
+}

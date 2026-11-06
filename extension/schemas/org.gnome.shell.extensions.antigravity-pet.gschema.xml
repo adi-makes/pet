@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.antigravity-pet" path="/org/gnome/shell/extensions/antigravity-pet/">
+    <key name="position-x" type="d">
+      <default>-1.0</default>
+      <summary>Pet X position</summary>
+      <description>Last saved horizontal coordinate of the pet on screen (-1 for default bottom-right).</description>
+    </key>
+    <key name="position-y" type="d">
+      <default>-1.0</default>
+      <summary>Pet Y position</summary>
+      <description>Last saved vertical coordinate of the pet on screen (-1 for default bottom-right).</description>
+    </key>
+    <key name="animation-enabled" type="b">
+      <default>true</default>
+      <summary>Enable animation</summary>
+      <description>Whether pet idle and state animations are running.</description>
+    </key>
+    <key name="pet-visible" type="b">
+      <default>true</default>
+      <summary>Pet visibility</summary>
+      <description>Whether the pet actor is visible on the desktop.</description>
+    </key>
+    <key name="pet-size" type="i">
+      <default>110</default>
+      <summary>Pet character size</summary>
+      <description>Pixel dimension of the pet sprite.</description>
+    </key>
+    <key name="screen-margin" type="i">
+      <default>20</default>
+      <summary>Screen margin padding</summary>
+      <description>Minimum distance from monitor boundaries in pixels.</description>
+    </key>
+    <key name="pet-state" type="s">
+      <default>"IDLE"</default>
+      <summary>Pet state</summary>
+      <description>Current status state (IDLE, WORKING, COMPLETED, ERROR, WAITING).</description>
+    </key>
+  </schema>
+</schemalist>
