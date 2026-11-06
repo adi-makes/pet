@@ -297,4 +297,26 @@
         • Replace static SVG easing with multi-frame animated sprite sheets or SVG sequences.                                    
         • Add a lightweight local DBus or Unix domain socket service allowing external build tools and Antigravity background    
         tasks to trigger WORKING, COMPLETED, or ERROR states automatically.                                                      
-                                                                                
+
+# Prompt 2
+
+    there some issue, i cannot run the install scipt, fix it and also add a git commit and push with proper message
+
+# Respone 2
+
+        The issue with install.sh has been resolved.                                                                                  
+    
+    ### Root Cause
+    
+    The project resides on an NTFS-formatted partition (ntfs3), where glib-compile-schemas failed when attempting atomic in-place 
+    file replacement (g_rename() error: No such file or directory on the temporary .compiled.XXXXXX file).
+    
+    ### Solution
+    
+    Updated install.sh:16-20 to compile schemas into a temporary directory created in /tmp, copy the generated gschemas.compiled
+    file into the target directory, and clean up the temporary directory.
+    
+    ### Git Actions
+    
+    • Committed: fix(install): compile gsettings schema via temp directory for ntfs compatibility (446f681)
+    • Pushed: Pushed to origin/main and configured upstream tracking.
