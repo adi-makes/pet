@@ -13,7 +13,11 @@ echo "=== Installing Antigravity Pet Extension ==="
 
 # 1. Compile schemas locally
 echo "[1/4] Compiling GSettings schemas..."
-glib-compile-schemas "$EXT_DIR/schemas"
+TMP_SCHEMA_DIR="$(mktemp -d)"
+glib-compile-schemas --targetdir="$TMP_SCHEMA_DIR" "$EXT_DIR/schemas"
+cp "$TMP_SCHEMA_DIR/gschemas.compiled" "$EXT_DIR/schemas/"
+rm -rf "$TMP_SCHEMA_DIR"
+
 mkdir -p "$SCHEMA_DIR"
 cp "$EXT_DIR/schemas/org.gnome.shell.extensions.antigravity-pet.gschema.xml" "$SCHEMA_DIR/"
 glib-compile-schemas "$SCHEMA_DIR"
