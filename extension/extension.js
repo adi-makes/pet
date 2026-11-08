@@ -123,7 +123,13 @@ class PetAnimationManager {
                     mode: Clutter.AnimationMode.EASE_IN_OUT_SINE,
                     onComplete: () => {
                         if (this._enabled && this._currentState === 'IDLE') {
-                            this._runIdleLoop();
+                            this._timerId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
+                                this._timerId = 0;
+                                if (this._enabled && this._currentState === 'IDLE') {
+                                    this._runIdleLoop();
+                                }
+                                return GLib.SOURCE_REMOVE;
+                            });
                         }
                     },
                 });
@@ -351,8 +357,8 @@ class AntigravityPetComponent {
         this._characterIcon = new St.Icon({
             gicon: petGIcon,
             icon_size: petSize,
-            pivot_point: new Clutter.Point({ x: 0.5, y: 0.5 }),
         });
+        this._characterIcon.set_pivot_point(0.5, 0.5);
         this._characterWrapper.set_child(this._characterIcon);
 
         // Horizontal status indicator line / divider
